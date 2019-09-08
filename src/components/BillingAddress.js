@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Input, Select} from './FormFields';
+import {Input, Select, InputCheckBox , LabelError} from './FormFields';
 
 export class BillingAddress extends Component {
   
@@ -26,16 +26,54 @@ export class BillingAddress extends Component {
     state: '',
     country: '',
     pincode: '',
-    contactNo: ''
+    contactNo: '',
+    isSameAsShipping: false,
+    errors: {}
+  }
+
+  validateForm = (values) =>{
+    let error = {};
+    
+    if(values.fullName === ''){
+      error.fullName ='Full Name is required';
+    }
+    if(values.addressLine1 === ''){
+      error.addressLine1 ='Address Line 1 is required';
+    }
+    if(values.city === ''){
+      error.city ='City is required';
+    }
+    if(values.state === ''){
+      error.state ='State is required';
+    }
+    if(values.country === ''){
+      error.country ='Please select a country';
+    }
+    if(values.pincode === ''){
+      error.pincode ='Pincode is required';
+    }
+    if(values.contactNo === ''){
+      error.contactNo ='Contact No is required';
+    }
+
+
+    if(Object.values(error).length > 0){
+      this.setState({errors:error});
+      return false;
+    }
+    return true;
   }
 
   componentDidMount(){
-    this.setState({...this.props.values});
+    this.setState({...this.props.values, errors: {}});
   }
 
   continue = e =>{
     e.preventDefault();
-    this.props.nextStep({billingAddress: this.state});
+    let isValid = this.validateForm(this.state);
+    
+    if(isValid)
+      this.props.nextStep({billingAddress: this.state});
   }
 
   previous = e =>{
@@ -44,18 +82,51 @@ export class BillingAddress extends Component {
   }
 
   handleChange =(e)=>{
-    this.setState({[e.target.name]:e.target.value});
+    const name = e.target.name;
+    const value = e.target.value;
+
+    let temp = Object.assign({}, this.state.errors);
+
+    if(value !== ''){
+      delete temp[name];
+    }
+
+    this.setState({[name]:value, errors:temp});
+  }
+
+  copyShippingAddress = ()=>{
+    let temp = Object.assign({}, this.props.shipping);
+    temp.isSameAsShipping = !this.state.isSameAsShipping;
+    
+    if(temp.isSameAsShipping === true){
+        this.setState(temp);
+    }
+    else{
+      this.setState({
+        fullName: '',
+        addressLine1: '',
+        addressLine2: '',
+        city: '',
+        state: '',
+        country: '',
+        pincode: '',
+        contactNo: '',
+        isSameAsShipping: false,
+        errors: {}
+      });
+    }
   }
 
   render() {
     const {title} = this.props;
-    const values = this.state;
+    const {errors,...values} = this.state;
 
     return (
       <form className="ui form">
         <h2 className="ui dividing header">{title}</h2>
         <div className="ui checkbox">
-            <input type="checkbox" name="sameAsShipping" />
+            <InputCheckBox checked={values.isSameAsShipping} 
+                handleClick={this.copyShippingAddress}/>
             <label><b>Same as Shipping Address</b></label>
             <br/>
         </div>
@@ -65,6 +136,7 @@ export class BillingAddress extends Component {
                 <Input name='fullName' type='text' placeholder='First Name' 
                     handleChange={this.handleChange}
                     value={values.fullName} />
+                <LabelError text={errors.fullName}/>
             </div>
             
         </div>
@@ -74,6 +146,7 @@ export class BillingAddress extends Component {
                 <Input type="text" name='addressLine1' placeholder="Address Line 1"
                     handleChange={this.handleChange} 
                     value={values.addressLine1}/>
+                <LabelError text={errors.addressLine1}/>
             </div>
         </div>
         <div className="field">
@@ -90,6 +163,7 @@ export class BillingAddress extends Component {
                 <Input type="text" name='city' placeholder="City"
                   handleChange={this.handleChange}  
                   value={values.city}/>
+                <LabelError text={errors.city}/>
             </div>
             
             <div className="field">
@@ -97,6 +171,7 @@ export class BillingAddress extends Component {
                 <Input type="text" name='state' placeholder="State" 
                   handleChange={this.handleChange}
                   value={values.state}/>
+                <LabelError text={errors.state}/>
             </div>
         </div>
         <div className="two fields">
@@ -105,12 +180,14 @@ export class BillingAddress extends Component {
                 <Select value={values.country} name='country'
                   handleChange={this.handleChange} 
                   options={this.country}/>
+                <LabelError text={errors.country}/>
             </div>
             <div className="field">
                 <label>Zip</label>
                 <Input type="text" placeholder="Zip" name='pincode'
                   handleChange={this.handleChange}
                   value={values.pincode}/>
+                <LabelError text={errors.pincode}/>
             </div>
         </div>
         <div className="field">
@@ -119,6 +196,7 @@ export class BillingAddress extends Component {
                 <Input type="text" placeholder="Contact No" name='contactNo'
                   handleChange={this.handleChange}
                   value={values.contactNo} />
+                <LabelError text={errors.contactNo}/>
             </div>
         </div>
         <div className="ui button"  onClick={this.previous}>Previous</div>

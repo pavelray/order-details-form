@@ -13,8 +13,7 @@ export class App extends React.Component{
         billingAddress: {},
         shippingAddress: {},
         orderDetails: {},
-        specifications: {},
-        sameAsShipping: false,
+        specifications: {}
     }
 
     nextStep = (values) =>{
@@ -47,9 +46,8 @@ export class App extends React.Component{
                         title = 'Billing Information'
                         nextStep={this.nextStep}
                         prevStep={this.prevStep}
-                        copyShippingAddress = {this.copyShippingAddress}
                         values = {billingAddress}
-                        sameAsShipping = {this.state.sameAsShipping}
+                        shipping= {shippingAddress}
                     />
                 )
             case 3:

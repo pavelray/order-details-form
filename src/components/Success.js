@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
 
 export class Success extends Component {
+  componentDidMount(){
+    localStorage.setItem('formData', JSON.stringify(this.props.values));
+  }
   render() {
     return (
-      <div>
-        <h1> Success</h1>
-      </div>
+        <>
+            <h1>Thank You !</h1>
+            <h3>For Placing Order</h3>
+        </>
     )
   }
 }

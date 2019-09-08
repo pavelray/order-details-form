@@ -6,6 +6,12 @@ export const Input =({type,name,placeholder,value,handleChange})=>{
     );
 }
 
+export const InputCheckBox =({checked,handleClick})=>{
+  return(
+    <input type='checkbox' onClick={handleClick} checked={checked} />
+  );
+}
+
 export const Select =({name,value,handleChange,options})=>{
   return(
     <select value={value} name={name} onChange={handleChange}>
@@ -26,4 +32,10 @@ const Option = ({options=[]}) =>{
     }
     </>
   )
+}
+
+export const LabelError = ({text}) =>{
+  return(
+    <label style={{color:'red'}}>{text}</label>
+  );
 }
