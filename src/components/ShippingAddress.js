@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import {Input, Select, LabelError} from './FormFields';
+import { connect } from "react-redux";
+import {addShipping} from '../actions'
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 
 export class ShippingAddress extends Component {
 
@@ -35,7 +38,9 @@ export class ShippingAddress extends Component {
     let isValid = this.validateForm(this.state);
     
     if(isValid)
-      this.props.nextStep({shippingAddress: this.state});
+      this.props.addShipping(this.state);
+      this.props.history.push('/step-2');
+      //this.props.nextStep({shippingAddress: this.state});
   }
 
   validateForm = (values) =>{
@@ -172,4 +177,16 @@ export class ShippingAddress extends Component {
   }
 }
 
-export default ShippingAddress
+const mapStateToProps = state => {
+  return { shippingAddress: state.shippingAddress};
+};
+
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addShipping: shippingAddress => dispatch(addShipping(shippingAddress))
+  };
+}
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(ShippingAddress)

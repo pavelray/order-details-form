@@ -1,0 +1,1 @@
+export const ADD_SHIPPING = 'ADD_SHIPPING_ADDRESS'

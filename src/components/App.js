@@ -5,95 +5,26 @@ import ShippingAddress from './ShippingAddress';
 import ProductDetails from './ProductDetails';
 import Confirm from './Confirm';
 import Success from './Success';
+import { connect } from "react-redux";
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 
-export class App extends React.Component{
+function App(props) {
+    return (
+        <Router>
+            <Route exact strict path="/" render={()=> <ShippingAddress title = 'Shipping Information'/>} />
+            <Route exact strict path="/step-1" render={()=> <ShippingAddress title = 'Shipping Information'/>} />
+            <Route exact strict path="/step-2" render={()=> <BillingAddress title = 'Billing Information'/>} />
+            <Route exact strict path="/step-3" render={()=> <OrderDetails title = 'Order Details'/>} />
+            <Route exact strict path="/step-4" render={()=> <ProductDetails title = 'Product Specifications'/>} />
+            <Route exact strict path="/step-5" render={()=> <Confirm title = 'Confirm Details'/>} />
+            <Route exact strict path="/step-6" render={()=> <Success />} />
 
-    state = {
-        step:1,
-        billingAddress: {},
-        shippingAddress: {},
-        orderDetails: {},
-        specifications: {}
-    }
+        </Router>
+    );
+  }
 
-    nextStep = (values) =>{
-        const {step} = this.state;
-        this.setState({
-            step : step + 1,
-            ...values
-        })
-    }
+const mapStateToProps = state => {
+    return { step: state.step };
+};
 
-    prevStep = () =>{
-        const {step} = this.state;
-
-        this.setState({
-            step : step - 1
-        })
-    }
-
-    render(){
-        const {step} = this.state;
-        const {billingAddress, shippingAddress, orderDetails , specifications} =  this.state;
-
-        const values =  {billingAddress, shippingAddress, orderDetails , specifications};
-
-        switch(step){
-            
-            case 2:
-                return(
-                    <BillingAddress 
-                        title = 'Billing Information'
-                        nextStep={this.nextStep}
-                        prevStep={this.prevStep}
-                        values = {billingAddress}
-                        shipping= {shippingAddress}
-                    />
-                )
-            case 3:
-                return(
-                    <OrderDetails 
-                        title = 'Order Details'
-                        nextStep={this.nextStep}
-                        prevStep={this.prevStep}
-                        values = {orderDetails}
-                    />
-                )
-            case 4:
-                return(
-                    <ProductDetails 
-                        title = 'Product Specifications'
-                        nextStep={this.nextStep}
-                        prevStep={this.prevStep}
-                        values = {specifications}
-                    />
-                ) 
-            case 5:
-                return(
-                    <Confirm 
-                        title = 'Confirm Details'
-                        nextStep={this.nextStep}
-                        prevStep={this.prevStep}
-                        values = {values}
-                    />
-                )
-            
-            case 6:
-                return(
-                    <Success values={values}/>
-            )
-
-            default:
-                return(
-                    <ShippingAddress 
-                        title = 'Shipping Information'
-                        nextStep={this.nextStep}
-                        values = {shippingAddress}
-                    />
-                )
-        
-        }
-    };
-}
-
-export default App;
+export default connect(mapStateToProps)(App);
