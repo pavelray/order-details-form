@@ -8,7 +8,7 @@ export const Input =({type,name,placeholder,value,handleChange})=>{
 
 export const InputCheckBox =({checked,handleClick})=>{
   return(
-    <input type='checkbox' onClick={handleClick} checked={checked} />
+    <input type='checkbox' onChange={handleClick} checked={checked} />
   );
 }
 
@@ -26,7 +26,7 @@ const Option = ({options=[]}) =>{
     {
       options.map(option=>{
         return (
-          <option value={option.value}>{option.text}</option>
+          <option key={option.value} value={option.value}>{option.text}</option>
         )
       })
     }

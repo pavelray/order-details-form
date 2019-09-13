@@ -1,5 +1,8 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 import { Input , LabelError} from './FormFields';
+import {addProductSpec, getDetails} from '../actions';
 
 export class ProductDetails extends Component {
   state = {
@@ -33,7 +36,7 @@ export class ProductDetails extends Component {
   }
 
   componentDidMount(){
-    this.setState({...this.props.values, errors: {}});
+    this.setState({...this.props.specifications, errors: {}});
   }
 
   continue = e =>{
@@ -41,12 +44,13 @@ export class ProductDetails extends Component {
     let isValid = this.validateForm(this.state);
     
     if(isValid)
-      this.props.nextStep({specifications: this.state});
+      this.props.addProductSpec(this.state);
+      //this.props.nextStep({specifications: this.state});
   }
 
   previous = e =>{
     e.preventDefault();
-    this.props.prevStep();
+      this.props.getDetails();
   }
 
   handleChange =(e)=>{
@@ -114,5 +118,12 @@ export class ProductDetails extends Component {
     )
   }
 }
+const mapStateToProps = state => {
+  return { specifications: state.specifications};
+};
 
-export default ProductDetails
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({addProductSpec,getDetails},dispatch);
+  
+
+export default connect(mapStateToProps,mapDispatchToProps)(ProductDetails)

@@ -6,22 +6,55 @@ import ProductDetails from './ProductDetails';
 import Confirm from './Confirm';
 import Success from './Success';
 import { connect } from "react-redux";
-import {BrowserRouter as Router, Route} from 'react-router-dom';
 
-function App(props) {
-    return (
-        <Router>
-            <Route exact strict path="/" render={()=> <ShippingAddress title = 'Shipping Information'/>} />
-            <Route exact strict path="/step-1" render={()=> <ShippingAddress title = 'Shipping Information'/>} />
-            <Route exact strict path="/step-2" render={()=> <BillingAddress title = 'Billing Information'/>} />
-            <Route exact strict path="/step-3" render={()=> <OrderDetails title = 'Order Details'/>} />
-            <Route exact strict path="/step-4" render={()=> <ProductDetails title = 'Product Specifications'/>} />
-            <Route exact strict path="/step-5" render={()=> <Confirm title = 'Confirm Details'/>} />
-            <Route exact strict path="/step-6" render={()=> <Success />} />
+export class App extends React.Component{
 
-        </Router>
-    );
-  }
+    render(){
+        const {step} = this.props;
+       
+        switch(step){
+            
+            case 2:
+                return(
+                    <BillingAddress 
+                        title = 'Billing Information'
+                    />
+                )
+            case 3:
+                return(
+                    <OrderDetails 
+                        title = 'Order Details'
+                    />
+                )
+            case 4:
+                return(
+                    <ProductDetails 
+                        title = 'Product Specifications'
+                    />
+                ) 
+            case 5:
+                return(
+                    <Confirm 
+                        title = 'Confirm Details'
+                    />
+                )
+            
+            case 6:
+                return(
+                    <Success />
+            )
+
+            default:
+                return(
+                    <ShippingAddress 
+                        title = 'Shipping Information'
+                    />
+                )
+        
+        }
+    };
+}
+
 
 const mapStateToProps = state => {
     return { step: state.step };

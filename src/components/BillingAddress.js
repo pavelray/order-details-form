@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
+import {connect} from 'react-redux';
+import { bindActionCreators } from 'redux';
 import {Input, Select, InputCheckBox , LabelError} from './FormFields';
+import {addBilling,getDetails} from '../actions';
 
 export class BillingAddress extends Component {
   
@@ -65,7 +68,7 @@ export class BillingAddress extends Component {
   }
 
   componentDidMount(){
-    this.setState({...this.props.values, errors: {}});
+    this.setState({...this.props.billingAddress, errors: {}});
   }
 
   continue = e =>{
@@ -73,12 +76,14 @@ export class BillingAddress extends Component {
     let isValid = this.validateForm(this.state);
     
     if(isValid)
-      this.props.nextStep({billingAddress: this.state});
+      this.props.addBilling(this.state);
+      //this.props.nextStep({billingAddress: this.state});
   }
 
   previous = e =>{
     e.preventDefault();
-    this.props.prevStep();
+    this.props.getDetails();
+    //this.props.prevStep();
   }
 
   handleChange =(e)=>{
@@ -95,7 +100,7 @@ export class BillingAddress extends Component {
   }
 
   copyShippingAddress = ()=>{
-    let temp = Object.assign({}, this.props.shipping);
+    let temp = Object.assign({}, this.props.shippingAddress);
     temp.isSameAsShipping = !this.state.isSameAsShipping;
     
     if(temp.isSameAsShipping === true){
@@ -207,4 +212,19 @@ export class BillingAddress extends Component {
 
 }
 
-export default BillingAddress
+const mapStateToProps = state => {
+  return { billingAddress: state.billingAddress, shippingAddress : state.shippingAddress};
+};
+
+
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+		{
+			addBilling,
+			getDetails
+		},
+		dispatch
+	);
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(BillingAddress)

@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import {Input, Select, LabelError} from './FormFields';
 import { connect } from "react-redux";
 import {addShipping} from '../actions'
-import {BrowserRouter as Router, Route} from 'react-router-dom';
 
 export class ShippingAddress extends Component {
 
@@ -39,7 +38,6 @@ export class ShippingAddress extends Component {
     
     if(isValid)
       this.props.addShipping(this.state);
-      this.props.history.push('/step-2');
       //this.props.nextStep({shippingAddress: this.state});
   }
 
@@ -90,7 +88,7 @@ export class ShippingAddress extends Component {
   }
 
   componentDidMount(){
-    this.setState({...this.props.values, errors: {}});
+    this.setState({...this.props.shippingAddress, errors: {}});
   }
 
 

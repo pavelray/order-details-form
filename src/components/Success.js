@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
+import {connect} from 'react-redux';
 
 export class Success extends Component {
   componentDidMount(){
-    localStorage.setItem('formData', JSON.stringify(this.props.values));
+    localStorage.setItem('formData', JSON.stringify(this.props.value));
   }
   render() {
     return (
@@ -13,5 +14,9 @@ export class Success extends Component {
     )
   }
 }
+const mapStateToProps = state => {
+  return {step:state.step, value:{...state}};
+};
 
-export default Success
+
+export default connect(mapStateToProps)(Success)

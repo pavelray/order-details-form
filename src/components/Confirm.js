@@ -1,24 +1,27 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {submitDetails,getDetails} from '../actions';
 
 export class Confirm extends Component {
   
   componentDidMount(){
-    this.setState({...this.props.values});
+    this.setState({...this.props});
   }
   
   continue = e =>{
     e.preventDefault();
-    this.props.nextStep();
+    this.props.submitDetails(this.state);
   }
 
   previous = e =>{
-      e.preventDefault();
-      this.props.prevStep();
+    e.preventDefault();
+    this.props.getDetails();
   }
 
 render() {
-    const {values, title} = this.props;
-    const {billingAddress, shippingAddress, orderDetails , specifications} =  values;
+    const {title} = this.props;
+    const {billingAddress, shippingAddress, orderDetails , specifications} =  this.props;
     return (
         <form className="ui form">
             <h2 className="ui dividing header">{title}</h2>
@@ -150,4 +153,12 @@ render() {
   }
 }
 
-export default Confirm
+const mapStateToProps = state => {
+    return {...state};
+  };
+  
+  
+const mapDispatchToProps = (dispatch) => bindActionCreators({submitDetails,getDetails},dispatch);
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(Confirm)

@@ -1,5 +1,8 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 import { Input, LabelError } from './FormFields';
+import {addOrder, getDetails} from '../actions'
 
 export class OrderDetails extends Component {
   state = {
@@ -26,7 +29,7 @@ export class OrderDetails extends Component {
   }
 
   componentDidMount(){
-    this.setState({...this.props.values, errors: {}});
+    this.setState({...this.props.orderDetails, errors: {}});
   }
 
   continue = e =>{
@@ -34,12 +37,13 @@ export class OrderDetails extends Component {
     let isValid = this.validateForm(this.state);
     
     if(isValid)
-      this.props.nextStep({orderDetails: this.state});
+      this.props.addOrder(this.state);
+      //this.props.nextStep({orderDetails: this.state});
   }
 
   previous = e =>{
     e.preventDefault();
-    this.props.prevStep();
+    this.props.getDetails();
   }
 
   handleChange =(e)=>{
@@ -83,4 +87,19 @@ export class OrderDetails extends Component {
   }
 }
 
-export default OrderDetails
+const mapStateToProps = state => {
+  return { orderDetails: state.orderDetails};
+};
+
+
+const mapDispatchToProps = (dispatch) => 
+  bindActionCreators(
+		{
+			addOrder,
+			getDetails
+		},
+		dispatch
+	);
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(OrderDetails)
