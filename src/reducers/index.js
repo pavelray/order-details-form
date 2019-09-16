@@ -1,16 +1,9 @@
 import {combineReducers} from 'redux';
-import shippingReducer  from './shipping';
-import billingReducer from './billing';
-import orderDetailsReducer from './orderDetails';
-import specificationsReducer from './specification';
-import detailsReducer from './details';
+import formReducer  from './formReducer';
 
-const rootReducer = combineReducers({
-    shippingReducer,
-    billingReducer,
-    orderDetailsReducer,
-    specificationsReducer,
-    detailsReducer
+
+const reducers = combineReducers({
+    formReducer
 });
 
-export default rootReducer;
+export default reducers;
