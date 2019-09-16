@@ -1,6 +1,13 @@
-import { ADD_SHIPPING, ADD_BILLING, SHOW_DETAILS, ADD_PRODUCT_SPEC, ADD_ORDER, SUBMIT_DETAILS } from "../constants/actions";
+//import { ADD_SHIPPING, ADD_BILLING, SHOW_DETAILS, ADD_PRODUCT_SPEC, ADD_ORDER, SUBMIT_DETAILS } from "../constants/actions";
 
-const initialState = {
+import {combineReducers} from 'redux';
+import shippingReducer  from './shipping';
+import billingReducer from './billing';
+import orderDetailsReducer from './orderDetails';
+import specificationsReducer from './specification';
+import detailsReducer from './details';
+
+/*const initialState = {
     step:1,
     billingAddress: {},
     shippingAddress: {},
@@ -9,7 +16,8 @@ const initialState = {
   };
 
 
-function rootReducer(state = initialState, action) {
+const rootReducer = (state=initialState, action) => {
+
     if(action.type === ADD_SHIPPING){
         const rObj = {
             ...state,
@@ -58,6 +66,14 @@ function rootReducer(state = initialState, action) {
         return rObj;
     }
     return state;
-};
+}; */
+
+const rootReducer = combineReducers({
+    shippingReducer,
+    billingReducer,
+    orderDetailsReducer,
+    specificationsReducer,
+    detailsReducer
+});
 
 export default rootReducer;
