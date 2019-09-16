@@ -10,11 +10,6 @@ import { connect } from "react-redux";
 
 export class App extends React.Component{
 
-    componentDidMount(){
-    
-
-    }
-
     render(){
         const {step} = this.props;
        
