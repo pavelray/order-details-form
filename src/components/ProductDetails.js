@@ -6,9 +6,9 @@ import {addProductSpec, getDetails} from '../actions';
 
 export class ProductDetails extends Component {
   state = {
-    actualThickness: '',
-    actualLength: '',
-    actualWidth: '',
+    actualThickness: 0,
+    actualLength: 0,
+    actualWidth: 0,
     seriesName: '',
     type: '',
     warranty: '',
