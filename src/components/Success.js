@@ -4,7 +4,9 @@ import mockApi from '../api/mockApi';
 
 
 export class Success extends Component {
-  isSaved = false;
+  state = {
+    isSaved: false
+  }
   componentDidMount(){
     //localStorage.setItem('formData', JSON.stringify(this.props.value));
 
@@ -12,7 +14,7 @@ export class Success extends Component {
       ...this.props.value
     }).then(res=> 
     {
-      this.isSaved = res.data;  
+      this.setState({isSaved:res.data});
       //console.log(res)
     }).catch(error => {
         console.log(error)
@@ -20,7 +22,7 @@ export class Success extends Component {
   }
 
   render() {
-    if(this.isSaved){
+    if(this.state.isSaved){
       return (
           <>
               <h1>Thank You !</h1>
