@@ -6,4 +6,4 @@ const reducers = combineReducers({
     formReducer
 });
 
-export default reducers;
+export default formReducer;

@@ -7,12 +7,14 @@ export class Success extends Component {
   componentDidMount(){
     localStorage.setItem('formData', JSON.stringify(this.props.value));
 
-    mockApi.post('/FormData',JSON.stringify(this.props.value)).then(res=> 
-      {
-          console.log(res)
-      }).catch(error => {
-          console.log(error)
-        });
+    mockApi.post('/FormData',{
+      ...this.props.value
+    }).then(res=> 
+    {
+        console.log(res)
+    }).catch(error => {
+        console.log(error)
+    });
   }
   render() {
     return (
