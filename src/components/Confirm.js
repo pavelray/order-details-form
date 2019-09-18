@@ -153,8 +153,8 @@ render() {
   }
 }
 
-const mapStateToProps = state => {
-    return {...state};
+const mapStateToProps = ({store}) => {
+    return {...store};
   };
   
   

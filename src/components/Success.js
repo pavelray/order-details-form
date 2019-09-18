@@ -34,8 +34,8 @@ export class Success extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {step:state.step, value:{...state}};
+const mapStateToProps = ({store}) => {
+  return {step:store.step, value:{...store}};
 };
 
 

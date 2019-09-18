@@ -212,8 +212,8 @@ export class BillingAddress extends Component {
 
 }
 
-const mapStateToProps = state => {
-  return { billingAddress: state.billingAddress, shippingAddress : state.shippingAddress};
+const mapStateToProps = ({store}) => {
+  return { billingAddress: store.billingAddress, shippingAddress : store.shippingAddress};
 };
 
 

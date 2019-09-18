@@ -175,9 +175,8 @@ export class ShippingAddress extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  console.log(state);
-  return { shippingAddress: state.shippingAddress};
+const mapStateToProps = ({store}) => {
+  return { shippingAddress: store.shippingAddress};
 };
 
 

@@ -118,8 +118,8 @@ export class ProductDetails extends Component {
     )
   }
 }
-const mapStateToProps = state => {
-  return { specifications: state.specifications};
+const mapStateToProps = ({store}) => {
+  return { specifications: store.specifications};
 };
 
 

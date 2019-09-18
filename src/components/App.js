@@ -57,8 +57,8 @@ export class App extends React.Component{
 }
 
 
-const mapStateToProps = state => {
-    return { step: state.step };
+const mapStateToProps = ({store}) => {
+    return { step: store.step };
 };
 
 export default connect(mapStateToProps)(App);

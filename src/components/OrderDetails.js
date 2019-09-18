@@ -87,8 +87,8 @@ export class OrderDetails extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return { orderDetails: state.orderDetails};
+const mapStateToProps =  ({store}) => {
+  return { orderDetails: store.orderDetails};
 };
 
 
