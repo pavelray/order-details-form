@@ -2,11 +2,11 @@
 
 This is a basic react application to create a multi step form. In this application I handled the state in each step component level. I have also added basic validation for each form on form submit.
 
-MASTER-BRANCH : This branch has basic React code. State is handled in each step component level.
+MASTER Branch  : This branch has basic React code. State is handled in each step component level.
 
-REDUX-1 : This branch has the code of implementing Redux and state is handled using store.
+REDUX-1 Branch : This branch has the code of implementing Redux and state is handled using store.
 
-REDUX-2 : This branch has the code of using combinedReducer and API integration. Saving the form data at final step.
+REDUX-2 Branch: This branch has the code of using combinedReducer and API integration. Saving the form data at final step.
 
 
 ## Step -1 : Shipping Address Form
