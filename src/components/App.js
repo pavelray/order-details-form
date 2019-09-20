@@ -6,7 +6,7 @@ import ProductDetails from './ProductDetails';
 import Confirm from './Confirm';
 import Success from './Success';
 import { connect } from "react-redux";
-//import mockApi from '../api/mockApi';
+
 
 export class App extends React.Component{
 
